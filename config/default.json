@@ -1,0 +1,12 @@
+{
+	"git": {
+		"repository": "git://github.com/JustSid/Blog.git",
+		"branch": "master"
+	},
+	"site": {
+		"title": "My awesome site",
+		"author": "Me",
+		"keywords": "Some keywords",
+		"description": "Description of the site"
+	}
+}

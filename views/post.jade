@@ -1,0 +1,47 @@
+include head
+include navbar
+include blog-meta
+include footer
+include analytics
+
+mixin article(post)
+  .well
+    mixin articleHeader(post)
+    .article-content
+      != post.html
+    #disqus_thread
+
+doctype 5
+html
+  head
+    mixin head()
+    link(rel='stylesheet', href='/css/blog.css')
+    link(rel='stylesheet', href='/css/lightbox.css')
+
+    mixin headJS()
+    script(type='text/javascript', src='/js/blog.js')
+    script(type='text/javascript', src='/js/prettyprint.js')
+    script(type='text/javascript', src='/js/lightbox-2.6.min.js')
+  body
+    mixin navbar()
+
+    .description
+      .content
+        .row-fluid
+          .span12
+            mixin headsUp()
+
+            - if(typeof post !== 'undefined')
+              mixin article(post)
+
+            mixin footer()
+          
+    
+    mixin analytics()
+    script(type='text/javascript').
+      var disqus_shortname = 'widerwille';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();

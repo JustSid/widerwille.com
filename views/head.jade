@@ -1,0 +1,24 @@
+mixin head()
+  title #{title}
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+  - if(typeof metas !== 'undefined')
+    each meta in metas
+      meta(name= meta.name, content= meta.content)
+
+  link(rel='shortcut icon', type='image/png', href='/images/favicon.ico')
+  link(rel='apple-touch-icon', href='/images/favicon-57x57.png')
+  link(rel='apple-touch-icon', sizes='72x72', href='/images/favicon-72x72.png')
+  link(rel='apple-touch-icon', sizes='114x114', href='/images/favicon-114x114.png')
+
+mixin headJS()
+  script(type='text/javascript', src='/js/jquery.js')
+  script(type='text/javascript', src='/js/core.js')
+
+mixin error(title, message)
+  .alert.alert-error
+    <strong>!{title}</strong> !{message}
+
+mixin info(title, message)
+  .alert.alert-info
+    <strong>!{title}</strong> !{message}

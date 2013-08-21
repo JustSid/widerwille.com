@@ -1,0 +1,12 @@
+
+mixin navbar()
+  .navbar
+    .content
+      .row-fluid
+        ul.nav
+          each entry in navbar.entries
+            li
+              if(entry.title.toLowerCase() == navbar.selected)
+                a.active(href=entry.target) #{entry.title}
+              else
+                a(href=entry.target) #{entry.title}

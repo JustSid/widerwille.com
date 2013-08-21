@@ -1,0 +1,39 @@
+include head
+include navbar
+include blog-meta
+include pagination
+include footer
+include analytics
+
+mixin article(post)
+  .well
+    mixin articleHeader(post)
+    .article-content
+      p
+        != post.html
+    a(href=post.url) Read more...
+
+doctype 5
+html
+  head
+    mixin head()
+    link(rel='stylesheet', href='/css/blog.css')
+
+    mixin headJS()
+  body
+    mixin navbar()
+
+    .description
+      .content
+        .row-fluid
+          .span12
+            mixin headsUp()
+
+            - if(typeof posts !== 'undefined')
+              each post in posts
+                mixin article(post)
+
+            mixin pagination()
+            mixin footer()
+
+    mixin analytics()

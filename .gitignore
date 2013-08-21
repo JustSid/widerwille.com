@@ -1,0 +1,5 @@
+.DS_Store
+/node_modules/
+/content/data.sqlite
+/content/git
+/config/runtime.json

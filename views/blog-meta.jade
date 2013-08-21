@@ -1,0 +1,25 @@
+mixin articleHeader(post)
+  .article-header
+    h1
+      a(href= '#{post.url}') #{post.title}
+      small(class= 'info') #{post.date}
+    small
+      lu.tag-list
+        - for(var i = 0; i < post.tags.length; i ++)
+          - var tag = post.tags[i]
+            - if(i < post.tags.length - 1)
+              li.tag
+                a(href= tag.url) #{tag.title}, 
+            - else
+              li.tag
+                a(href= tag.url) #{tag.title} 
+
+mixin headsUp()
+  #heads-up
+    - if(typeof errors !== 'undefined')
+      each error in errors
+        mixin error(error.title, error.message)
+    - if(typeof infos !== 'undefined')
+      each info in infos
+        mixin info(info.title, info.message)
+        

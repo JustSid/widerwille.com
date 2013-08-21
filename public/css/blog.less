@@ -1,0 +1,140 @@
+@import "core.less";
+@import "prettyprint.less";
+
+@header-margin: 0px;
+
+h1, h2 {
+	text-align: left;
+	font-size: 32px;
+	line-height: 1.1;
+	letter-spacing: 0;
+	margin: 1em 0 0.2em 0;
+}
+
+h2 {
+	font-size: 28px;
+}
+
+
+h3 {
+	font-size: 22px;
+	line-height: 1.1;
+	margin: 1em 0 0.6em 0;
+}
+
+
+
+.article-header {
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	border-bottom: #e6e6e6 1px solid;
+}
+
+.article-header > h1 {
+	text-align: left;
+	margin-bottom: 0px;
+	margin-top: @header-margin;
+}
+
+.article-header > h1 > a {
+	text-decoration: none;
+	color: @default-text-color;
+}
+
+.article-header > h1 > a:hover {
+	text-decoration: underline;
+}
+
+.article-header > h1 > small {
+	color: #999;
+	margin-left: 5px;
+}
+
+.article-header > h1 > small.info {
+	font-size: 19px;
+	float: right;
+}
+
+.article-content {
+	margin-bottom: 15px;
+}
+
+.article-break {
+	clear: all;
+	margin-top: 5px;
+}
+
+
+
+.tag-list {
+	list-style-type: none;
+}
+
+.tag {
+	display: inline;
+	list-style: none;
+}
+
+.tag > a {
+	color: #999;
+	text-decoration: none;
+
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.tag > a:hover {
+	color: @default-link-color;
+}
+
+
+
+.pagination {
+	height:36px;
+	margin:18px 0;
+}
+.pagination ul {
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	background-color: #f5f5f5;
+	margin-left:0;
+	margin-bottom:0;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow:0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.pagination li {
+	display:inline;
+}
+.pagination a {
+	float:left;padding:0 14px;
+	line-height:34px;
+	text-decoration:none;border:1px solid #ddd;border-left-width:0;
+}
+.pagination a:hover,.pagination .active a {
+	background-color:#f5f5f5;
+}
+.pagination .active a {
+	color:#999999;
+	cursor:default;
+}
+.pagination .disabled a,.pagination .disabled a:hover {
+	color:#999999;
+	background-color:transparent;
+	cursor:default;
+}
+.pagination li:first-child a {
+	border-left-width:1px;
+	-webkit-border-radius:3px 0 0 3px;
+	-moz-border-radius:3px 0 0 3px;
+	border-radius:3px 0 0 3px;
+}
+.pagination li:last-child a {
+	-webkit-border-radius:0 3px 3px 0;
+	-moz-border-radius:0 3px 3px 0;
+	border-radius:0 3px 3px 0;
+}

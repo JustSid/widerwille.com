@@ -1,0 +1,37 @@
+mixin pagination()
+  - if(typeof page != 'undefined' && typeof pages != 'undefined')
+    - var display = 8
+    - var half = Math.floor(display / 2)
+    - var first = page - half
+    - var last  = page + half
+    - var base  = '/blog/page/'
+
+    if(pages > 1)
+      .pagination
+        ul
+          if(page == 0)
+            li.disabled
+              a(href='#') «
+          else
+            li
+              a(href= base + (page)) «
+
+          - for(var i = first; i < last; i ++) {
+            - if(i < 0) continue;
+            - if(i >= pages) break;
+
+            if(i == page)
+              li.active
+                a(href='#') #{i + 1}
+            else
+              li
+                a(href= base + (i + 1)) #{i + 1}
+
+          - }
+
+          if(page == (pages - 1))
+            li.disabled
+              a(href='#') »
+          else
+            li
+              a(href = base + (page + 2)) »
