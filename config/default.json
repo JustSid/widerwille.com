@@ -8,5 +8,6 @@
 		"author": "Me",
 		"keywords": "Some keywords",
 		"description": "Description of the site"
-	}
+	},
+	"footer": "Copyright 2013"
 }

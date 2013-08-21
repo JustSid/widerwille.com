@@ -9,6 +9,9 @@ function basicData(entry)
 	data.title  = config.site.title + ' - ' + entry;
 	data.navbar = getNavbar(entry);
 	data.metas  = new Array();
+	data.footer = config.footer;
+	data.disqus = config.disqus;
+	data.analytics = config.analytics;
 
 	_.each(config.site, function(value, key) {
 		if(key !== 'title')

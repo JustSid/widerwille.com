@@ -15,6 +15,8 @@ utility.validateObject(config.git, 'branch');
 utility.validateObject(config, 'site');
 utility.validateObject(config.site, 'title');
 
+utility.validateObject(config, 'footer');
+
 // Configure the server
 var git  = require('./controller/git.js');
 var blog = require('./controller/blog.js');
