@@ -3,3 +3,6 @@
 /content/data.sqlite
 /content/git
 /config/runtime.json
+/public/css/blog.css
+/public/css/core.css
+/public/css/lightbox.css
