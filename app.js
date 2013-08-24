@@ -88,9 +88,12 @@ app.use(function(req, res) {
 // Initialize git, import new posts and start the server
 git.init(function() {
 
-	blog.import();
+	blog.import(function() {
 
-	http.createServer(app).listen(app.get('port'), function(){
-	 	console.log("Jublog up and running on port " + app.get('port'));
+		http.createServer(app).listen(app.get('port'), function(){
+		 	console.log("Jublog up and running on port " + app.get('port'));
+		});
+		
 	});
+
 });

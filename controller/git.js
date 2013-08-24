@@ -51,6 +51,8 @@ function commitList(since, callback)
 
 function pull(callback)
 {
+	console.log('git pull');
+
 	var command = 'cd ' + local + '; git pull origin ' + branch;
 	exec(command, function(error, stdout, stderr) {
 
@@ -67,6 +69,8 @@ function pull(callback)
 
 function cloneRepository(callback)
 {
+	console.log('git clone');
+
 	var command = 'rm -rf ' + repository + '; git clone -b ' + branch + ' ' + repository + ' ' + local;
 	exec(command, function(error, stdout, stderr) {
 
@@ -84,6 +88,8 @@ function cloneRepository(callback)
 
 function init(callback)
 {
+	console.log('Initializing git');
+
 	try
 	{
 		var exists = fs.existsSync(local);

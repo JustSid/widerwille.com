@@ -11,6 +11,10 @@ var git = require('./git.js');
 var utility = require('./../content/utility.js');
 var basedir = path.join(git.repository, 'content/');
 
+// ---------------
+// Importing
+// ---------------
+
 function generateCleanID(title, date)
 {
 	var id = date.format('MM-DD-YYYY');
@@ -178,8 +182,83 @@ function processPosts(posts, preview, callback)
 	});
 }
 
+function importData()
+{
+	console.log('Importing data');
+
+	var articlesPath = path.join(basedir, 'articles/!content.json');
+	var articles = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'));
+
+	importPosts(articles);
+}
+
+function importCommits(commits, callback)
+{
+	var chainer = new Sequelize.Utils.QueryChainer();
+
+	for(var i = 0; i < commits.length; i ++)
+	{
+		var commit = commits[i];
+		chainer.add(sequelize.Commit.create({ hash: commit }));
+	}
+
+	chainer.runSerially().success(function() {
+
+		if(typeof callback !== 'undefined')
+			callback();
+	});
+}
+
+function cleanImport(callback)
+{
+	var chainer = new Sequelize.Utils.QueryChainer;
+
+	chainer.add(sequelize.sequelize.drop());
+	chainer.add(sequelize.sequelize.sync());
+
+	chainer.runSerially().success(function() {
+		importData();
+
+		git.commits(undefined, function(commits) {
+			importCommits(commits, callback);
+		});
+	});
+}
+
+function importFromRepository(callback)
+{
+	console.log('Importing blog data');
+
+	sequelize.Commit.find({ order: 'ROWID DESC' }).success(function(commit) {
+		if(commit == null)
+		{
+			cleanImport(callback);
+			return;
+		}
+
+		git.commits(commit.values.hash, function(commits) {
+
+			if(commits.length > 0)
+			{
+				importData();
+				importCommits(commits, callback);
+			}
+			else if(typeof callback !== 'undefined')
+			{
+				callback();
+			}
+		});
+	});
+}
+
+// ---------------
+// Fetching
+// ---------------
+
 function getPage(page, callback)
 {
+	console.log('Getting page "' + page + '"');
+
 	var limit = 8;
 	var start = page * limit;
 
@@ -213,6 +292,8 @@ function getPage(page, callback)
 
 function getPost(post, callback)
 {
+	console.log('Getting post "' + post + '"');
+
 	var data = {};
 
 	sequelize.Post.find({ where: { puuid: post }}).success(function(post) {
@@ -234,6 +315,8 @@ function getPost(post, callback)
 
 function getTag(name, callback)
 {
+	console.log('Getting tag "' + name + '"');
+
 	sequelize.Tag.find({ where: {title: name.toLowerCase() }}).success(function(tag) {
 
 		if(tag == null)
@@ -267,66 +350,6 @@ function getTag(name, callback)
 	});
 }
 
-
-
-function importData()
-{
-	console.log('Importing data');
-
-	var articlesPath = path.join(basedir, 'articles/!content.json');
-	var articles = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'));
-
-	importPosts(articles);
-}
-
-function importCommits(commits)
-{
-	var chainer = new Sequelize.Utils.QueryChainer();
-
-	for(var i = 0; i < commits.length; i ++)
-	{
-		var commit = commits[i];
-		chainer.add(sequelize.Commit.create({ hash: commit }));
-	}
-
-	chainer.runSerially();
-}
-
-function cleanImport()
-{
-	var chainer = new Sequelize.Utils.QueryChainer;
-
-	chainer.add(sequelize.sequelize.drop());
-	chainer.add(sequelize.sequelize.sync());
-
-	chainer.runSerially().success(function() {
-		importData();
-
-		git.commits(undefined, function(commits) {
-			importCommits(commits);
-		});
-	});
-}
-
-function importFromRepository()
-{
-	sequelize.Commit.find({ order: 'ROWID DESC' }).success(function(commit) {
-		if(commit == null)
-		{
-			cleanImport();
-			return;
-		}
-
-		git.commits(commit.values.hash, function(commits) {
-
-			if(commits.length > 0)
-			{
-				importData();
-				importCommits(commits);
-			}
-		});
-	});
-}
 
 module.exports = {
 	import: importFromRepository,
